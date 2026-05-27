@@ -19,7 +19,7 @@ date_default_timezone_set('Asia/Kolkata');
 $host     = 'aws-1-ap-south-1.pooler.supabase.com';
 $port     = '5432';
 $dbname   = 'postgres';
-$username = 'postgres';
+$username = 'postgres.vskgixwbsivstogqadxj';
 $password = 'AgentOSX@2026';
 
 try {
