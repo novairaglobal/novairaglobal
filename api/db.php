@@ -16,7 +16,7 @@ date_default_timezone_set('Asia/Kolkata');
 // ==========================================
 // SUPABASE DATABASE CONFIG
 // ==========================================
-$host     = 'db.vskgixwbsivstogqadxj.supabase.co';
+$host     = 'aws-1-ap-south-1.pooler.supabase.com';
 $port     = '5432';
 $dbname   = 'postgres';
 $username = 'postgres';
