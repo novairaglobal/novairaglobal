@@ -2,9 +2,20 @@
 // api/db.php
 
 // ==========================================
-// SUPABASE POSTGRESQL DATABASE CONFIG
+// DEBUG MODE
 // ==========================================
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
+// ==========================================
+// TIMEZONE
+// ==========================================
+date_default_timezone_set('Asia/Kolkata');
+
+// ==========================================
+// SUPABASE DATABASE CONFIG
+// ==========================================
 $host     = 'db.vskgixwbsivstogqadxj.supabase.co';
 $port     = '5432';
 $dbname   = 'postgres';
@@ -14,21 +25,19 @@ $password = 'AgentOSX@2026';
 try {
 
     // ==========================================
-    // CONNECT TO SUPABASE POSTGRESQL
+    // DATABASE CONNECTION
     // ==========================================
     $pdo = new PDO(
-        "pgsql:host=$host;port=$port;dbname=$dbname",
+        "pgsql:host=$host;port=$port;dbname=$dbname;sslmode=require",
         $username,
         $password
     );
 
-    // Error mode
+    // ==========================================
+    // PDO SETTINGS
+    // ==========================================
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    // ==========================================
-    // TIMEZONE
-    // ==========================================
-    date_default_timezone_set('Asia/Kolkata');
+    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
     // ==========================================
     // SESSION START
@@ -36,10 +45,10 @@ try {
     if (session_status() === PHP_SESSION_NONE) {
 
         session_set_cookie_params([
-            'domain' => '.novairaglobal.com',
-            'path' => '/',
+            'domain'   => '.novairaglobal.com',
+            'path'     => '/',
             'httponly' => true,
-            'secure' => true,
+            'secure'   => true,
             'samesite' => 'Lax'
         ]);
 
@@ -47,81 +56,72 @@ try {
     }
 
     // ==========================================
+    // DATABASE TEST
+    // ==========================================
+    $testQuery = $pdo->query("SELECT NOW()");
+    $serverTime = $testQuery->fetchColumn();
+
+    echo "
+    <div style='
+        background:#111;
+        color:#00ff88;
+        padding:20px;
+        margin:20px;
+        border-radius:10px;
+        font-family:Arial;
+    '>
+        <h2>✅ SUPABASE DATABASE CONNECTED</h2>
+
+        <p><b>Host:</b> $host</p>
+
+        <p><b>Database:</b> $dbname</p>
+
+        <p><b>PostgreSQL Time:</b> $serverTime</p>
+    </div>
+    ";
+
+    // ==========================================
     // LAST ACTIVE TRACKING
     // ==========================================
-    if (isset($_SESSION['user_id']) && isset($_SESSION['user_type'])) {
-
-        $current_time = date('Y-m-d H:i:s');
-        $logged_in_id = $_SESSION['user_id'];
+    if (
+        isset($_SESSION['user_id']) &&
+        isset($_SESSION['user_type'])
+    ) {
 
         try {
 
+            $current_time = date('Y-m-d H:i:s');
+            $logged_in_id = $_SESSION['user_id'];
+
             if ($_SESSION['user_type'] === 'admin') {
 
-                $stmtLastActive = $pdo->prepare(
-                    "UPDATE admin SET last_active = :time WHERE id = :id"
+                $stmt = $pdo->prepare(
+                    "UPDATE admin
+                    SET last_active = :time
+                    WHERE id = :id"
                 );
 
             } else {
 
-                $stmtLastActive = $pdo->prepare(
-                    "UPDATE users SET last_active = :time WHERE id = :id"
+                $stmt = $pdo->prepare(
+                    "UPDATE users
+                    SET last_active = :time
+                    WHERE id = :id"
                 );
             }
 
-            $stmtLastActive->execute([
+            $stmt->execute([
                 ':time' => $current_time,
                 ':id'   => $logged_in_id
             ]);
 
         } catch (PDOException $e) {
 
-            error_log("Last Active Update Failed: " . $e->getMessage());
+            error_log(
+                'Last Active Update Failed: ' .
+                $e->getMessage()
+            );
         }
-    }
-
-    // ==========================================
-    // MAINTENANCE MODE CHECK
-    // ==========================================
-    try {
-
-        $stmt = $pdo->prepare("
-            SELECT setting_value
-            FROM system_settings
-            WHERE setting_name = 'maintenance_mode'
-            LIMIT 1
-        ");
-
-        $stmt->execute();
-
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($result && $result['setting_value'] == '1') {
-
-            $is_admin = isset($_SESSION['user_type']) &&
-                        $_SESSION['user_type'] === 'admin';
-
-            $is_user_65 = isset($_SESSION['user_id']) &&
-                          $_SESSION['user_id'] == 65;
-
-            if (!$is_admin && !$is_user_65) {
-
-                $currentPage = basename($_SERVER['PHP_SELF']);
-
-                if (
-                    $currentPage !== 'maintenance.php' &&
-                    $currentPage !== 'maintenance.html'
-                ) {
-
-                    header("Location: /maintenance.php");
-                    exit();
-                }
-            }
-        }
-
-    } catch (PDOException $e) {
-
-        error_log("Maintenance Check Failed: " . $e->getMessage());
     }
 
     // ==========================================
@@ -139,17 +139,19 @@ try {
             $_SESSION['saved_fcm_token'] !== $fcm_token
         ) {
 
-            $userId = $_SESSION['user_id'];
-
-            $table = (
-                isset($_SESSION['user_type']) &&
-                $_SESSION['user_type'] === 'admin'
-            ) ? 'admin' : 'users';
-
             try {
 
+                $userId = $_SESSION['user_id'];
+
+                $table = (
+                    isset($_SESSION['user_type']) &&
+                    $_SESSION['user_type'] === 'admin'
+                ) ? 'admin' : 'users';
+
                 $stmtToken = $pdo->prepare(
-                    "UPDATE $table SET fcm_token = :token WHERE id = :id"
+                    "UPDATE $table
+                    SET fcm_token = :token
+                    WHERE id = :id"
                 );
 
                 $stmtToken->execute([
@@ -162,7 +164,7 @@ try {
             } catch (PDOException $e) {
 
                 error_log(
-                    "FCM Token Silent Update Failed: " .
+                    'FCM Token Update Failed: ' .
                     $e->getMessage()
                 );
             }
@@ -183,11 +185,13 @@ try {
 
             $current_time = date('Y-m-d H:i:s');
 
-            $page_url = "https://" .
+            $page_url =
+                "https://" .
                 ($_SERVER['HTTP_HOST'] ?? '') .
                 ($_SERVER['REQUEST_URI'] ?? '');
 
-            $ip_address = $_SERVER['REMOTE_ADDR'] ?? 'Unknown';
+            $ip_address =
+                $_SERVER['REMOTE_ADDR'] ?? 'Unknown';
 
             $stmt = $pdo->prepare("
                 INSERT INTO system_error_logs
@@ -213,33 +217,47 @@ try {
             ");
 
             $stmt->execute([
-                ':user_id'      => $user_id,
-                ':error_type'   => $error_type,
-                ':error_message'=> $error_message,
-                ':page_url'     => $page_url,
-                ':ip_address'   => $ip_address,
-                ':created_at'   => $current_time
+                ':user_id'       => $user_id,
+                ':error_type'    => $error_type,
+                ':error_message' => $error_message,
+                ':page_url'      => $page_url,
+                ':ip_address'    => $ip_address,
+                ':created_at'    => $current_time
             ]);
 
         } catch (Exception $e) {
 
-            error_log("System Error Log Failed");
+            error_log(
+                'System Error Log Failed'
+            );
         }
     }
 
 } catch (PDOException $e) {
 
-    error_log("Database Connection Failed: " . $e->getMessage());
+    // ==========================================
+    // CONNECTION FAILED
+    // ==========================================
 
-    $currentPage = basename($_SERVER['PHP_SELF']);
+    echo "
+    <div style='
+        background:#111;
+        color:red;
+        padding:20px;
+        margin:20px;
+        border-radius:10px;
+        font-family:Arial;
+    '>
+        <h2>❌ DATABASE CONNECTION FAILED</h2>
 
-    if (
-        $currentPage !== 'maintenance.php' &&
-        $currentPage !== 'maintenance.html'
-    ) {
+        <p><b>Error:</b></p>
 
-        header("Location: /maintenance.php");
-        exit();
-    }
+        <pre style='white-space:pre-wrap;color:#ff5555;'>
+" . $e->getMessage() . "
+        </pre>
+    </div>
+    ";
+
+    exit();
 }
 ?>
