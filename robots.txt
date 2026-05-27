@@ -1,0 +1,17 @@
+# --- সোশ্যাল মিডিয়া বটদের পারমিশন (Facebook & WhatsApp) ---
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+# --- গুগল এবং অন্যান্য সব সার্চ ইঞ্জিনের জন্য রুল ---
+User-agent: *
+Disallow: /admin/
+Disallow: /api/
+Disallow: /includes/
+Disallow: /authentication/
+Allow: /
+
+# --- সাইটম্যাপ লিংক ---
+Sitemap: https://novairasolution.com/sitemap.xml

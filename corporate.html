@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#ffffff">
+    
+    <title>Corporate Solutions | Novaira Global | Enterprise Marketing</title>
+    <meta name="title" content="Corporate Solutions | Novaira Global | Enterprise Marketing">
+    <meta name="description" content="Enterprise-grade digital marketing and brand scaling for corporate clients. Partner with Novaira Global for data-centric B2B marketing and app growth.">
+    <meta name="keywords" content="Corporate marketing, B2B digital marketing, enterprise app growth, corporate branding agency, performance marketing for enterprises, Novaira Global">
+    <meta name="author" content="Novaira Global">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <link rel="canonical" href="https://novairasolution.com/en/corporate">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://novairasolution.com/en/corporate">
+    <meta property="og:title" content="Corporate Solutions | Novaira Global Marketing">
+    <meta property="og:description" content="Dedicated marketing teams and scalable digital ecosystems for enterprise and corporate brands.">
+    <meta property="og:image" content="https://novairasolution.com/assets/images/social-card.png">
+    <meta property="og:site_name" content="Novaira Global">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://novairasolution.com/en/corporate">
+    <meta name="twitter:title" content="Corporate Solutions | Novaira Global Marketing">
+    <meta name="twitter:description" content="Dedicated marketing teams and scalable digital ecosystems for enterprise and corporate brands.">
+    <meta name="twitter:image" content="https://novairasolution.com/assets/images/social-card.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Corporate Solutions | Novaira Global",
+      "description": "Enterprise-grade digital marketing and brand scaling for corporate clients.",
+      "url": "https://novairasolution.com/en/corporate",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Novaira Global",
+        "alternateName": "Novaira Solution",
+        "url": "https://novairasolution.com",
+        "logo": "https://novairasolution.com/assets/images/logo.png"
+      }
+    }
+    </script>
+
+    <link rel="icon" href="/assets/images/logo.png" type="image/png">
+    <link rel="apple-touch-icon" href="/assets/images/logo.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#4F46E5', // Indigo-600
+                        secondary: '#1E293B', // Slate-800
+                        accent: '#F3F4F6'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* Modern Scroll Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Glassmorphism for Navbar */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        /* Mobile Sidebar Transitions */
+        .sidebar-overlay { transition: opacity 0.3s ease; }
+        .sidebar-menu { transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased overflow-x-hidden">
+
+    <header class="fixed w-full top-0 z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="window.location.href='/en/'">
+                    <div class="w-10 h-10 bg-primary text-white rounded-xl flex items-center justify-center font-bold text-xl shadow-lg">N</div>
+                    <span class="font-bold text-2xl tracking-tight text-secondary">Novaira Global</span>
+                </div>
+
+                <nav class="hidden md:flex space-x-8">
+                    <a href="/" class="text-gray-600 hover:text-primary font-semibold transition-colors">Home</a>
+                    <a href="/about" class="text-gray-600 hover:text-primary font-semibold transition-colors">About</a>
+                    <a href="/services" class="text-gray-600 hover:text-primary font-semibold transition-colors">Services</a>
+                    <a href="/corporate" class="text-primary font-bold transition-colors">Corporate</a>
+                    <a href="/#contact" class="text-gray-600 hover:text-primary font-semibold transition-colors">Contact</a>
+                </nav>
+
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="https://accounts.novairasolution.com" class="text-gray-600 hover:text-primary font-bold transition-colors">Login</a>
+                    <a href="/#contact" class="bg-primary hover:bg-indigo-700 text-white px-6 py-2.5 rounded-full font-bold transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">Partner With Us</a>
+                </div>
+
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-800 hover:text-primary focus:outline-none p-2" aria-label="Toggle Menu">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div id="mobile-sidebar" class="fixed inset-0 z-[60] hidden">
+        <div id="sidebar-overlay" class="absolute inset-0 bg-gray-900/60 backdrop-blur-sm opacity-0 sidebar-overlay" onclick="closeSidebar()"></div>
+        
+        <div id="sidebar-content" class="absolute inset-y-0 right-0 max-w-[280px] w-full bg-white shadow-2xl transform translate-x-full sidebar-menu flex flex-col">
+            <div class="flex justify-between items-center p-6 border-b border-gray-100 bg-gray-50/50">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-primary text-white rounded-xl flex items-center justify-center font-bold text-xl shadow-md">N</div>
+                    <span class="font-bold text-2xl text-secondary">Novaira</span>
+                </div>
+                <button onclick="closeSidebar()" class="text-gray-400 hover:text-red-500 transition-colors p-2 bg-white rounded-full shadow-sm border border-gray-100" aria-label="Close Menu">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+            </div>
+            
+            <div class="flex flex-col px-6 py-8 space-y-2 flex-grow overflow-y-auto">
+                <a href="/en/" class="flex items-center gap-3 text-lg font-semibold text-gray-700 hover:text-primary hover:bg-indigo-50 p-3 rounded-xl transition-all">
+                    <i class="fas fa-home w-6 text-center text-gray-400"></i> Home
+                </a>
+                <a href="/en/about" class="flex items-center gap-3 text-lg font-semibold text-gray-700 hover:text-primary hover:bg-indigo-50 p-3 rounded-xl transition-all">
+                    <i class="fas fa-building w-6 text-center text-gray-400"></i> About Us
+                </a>
+                <a href="/en/services" class="flex items-center gap-3 text-lg font-semibold text-gray-700 hover:text-primary hover:bg-indigo-50 p-3 rounded-xl transition-all">
+                    <i class="fas fa-layer-group w-6 text-center text-gray-400"></i> Services
+                </a>
+                <a href="/en/corporate" class="flex items-center gap-3 text-lg font-bold text-primary bg-indigo-50 p-3 rounded-xl transition-all">
+                    <i class="fas fa-briefcase w-6 text-center text-primary"></i> Corporate
+                </a>
+                <a href="/en/#contact" onclick="closeSidebar()" class="flex items-center gap-3 text-lg font-semibold text-gray-700 hover:text-primary hover:bg-indigo-50 p-3 rounded-xl transition-all">
+                    <i class="fas fa-envelope w-6 text-center text-gray-400"></i> Contact
+                </a>
+            </div>
+
+            <div class="p-6 border-t border-gray-100 bg-gray-50/50 space-y-3">
+                <a href="https://accounts.novairasolution.com" class="w-full flex justify-center items-center gap-2 border-2 border-gray-200 text-gray-700 py-3 rounded-xl font-bold hover:bg-white hover:border-primary hover:text-primary transition-all">
+                    <i class="fas fa-user-circle"></i> Login
+                </a>
+                <a href="/en/#contact" onclick="closeSidebar()" class="w-full flex justify-center items-center gap-2 bg-primary text-white py-3 rounded-xl font-bold shadow-md hover:bg-indigo-700 transition-all">
+                    Partner With Us <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <section class="pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden relative bg-secondary text-white">
+        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-primary mix-blend-screen filter blur-[100px] opacity-40 animate-pulse"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+                <div class="reveal">
+                    <span class="inline-block py-1.5 px-4 rounded-full bg-white/10 text-indigo-200 font-bold text-xs sm:text-sm mb-6 border border-white/20 uppercase tracking-widest shadow-sm">
+                        Enterprise Solutions
+                    </span>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 leading-tight">
+                        Marketing Infrastructure for <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">Industry Leaders.</span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-gray-400 mb-10 leading-relaxed font-medium">
+                        We provide scalable, compliant, and data-centric digital ecosystems designed specifically for corporate brands, enterprise-level apps, and high-growth B2B organizations.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 px-4 sm:px-0">
+                        <a href="/en/#contact" class="bg-primary hover:bg-indigo-500 text-white px-8 py-4 rounded-full font-bold text-lg shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-1 text-center flex items-center justify-center gap-2">
+                            Schedule Executive Briefing <i class="fas fa-arrow-right text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="relative reveal hidden lg:block" style="transition-delay: 100ms;">
+                    <div class="grid grid-cols-2 gap-6">
+                        <img src="https://images.unsplash.com/photo-1554469384-e58fac16e23a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Corporate Boardroom" class="rounded-3xl shadow-2xl mt-12 transition-transform duration-500 hover:-translate-y-2">
+                        <img src="https://images.unsplash.com/photo-1560179707-f14e90ef3623?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Data Analytics" class="rounded-3xl shadow-2xl transition-transform duration-500 hover:-translate-y-2">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-secondary mb-4">Why Enterprises Choose Novaira Global</h2>
+                <p class="text-gray-500 font-medium text-lg">We understand the complexities of corporate structures, compliance requirements, and the need for flawless, scalable execution.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 reveal">
+                <div class="p-8 bg-gray-50 rounded-3xl border border-gray-100 hover:shadow-xl hover:border-primary transition-all duration-300 transform hover:-translate-y-2 group">
+                    <div class="w-16 h-16 bg-indigo-100 text-primary rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-primary group-hover:text-white transition-colors shadow-sm">
+                        <i class="fas fa-users-cog"></i>
+                    </div>
+                    <h3 class="text-xl font-extrabold text-secondary mb-4">Dedicated Teams</h3>
+                    <p class="text-gray-600 font-medium leading-relaxed">Get a dedicated account director, media buyers, and creative strategists who act as an extension of your internal corporate team.</p>
+                </div>
+
+                <div class="p-8 bg-gray-50 rounded-3xl border border-gray-100 hover:shadow-xl hover:border-primary transition-all duration-300 transform hover:-translate-y-2 group">
+                    <div class="w-16 h-16 bg-indigo-100 text-primary rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-primary group-hover:text-white transition-colors shadow-sm">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-extrabold text-secondary mb-4">Compliance & Security</h3>
+                    <p class="text-gray-600 font-medium leading-relaxed">We strictly adhere to global data privacy laws (GDPR, CCPA) ensuring your user acquisition strategies are 100% compliant and secure.</p>
+                </div>
+
+                <div class="p-8 bg-gray-50 rounded-3xl border border-gray-100 hover:shadow-xl hover:border-primary transition-all duration-300 transform hover:-translate-y-2 group">
+                    <div class="w-16 h-16 bg-indigo-100 text-primary rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-primary group-hover:text-white transition-colors shadow-sm">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h3 class="text-xl font-extrabold text-secondary mb-4">Scalable Infrastructure</h3>
+                    <p class="text-gray-600 font-medium leading-relaxed">Whether you are expanding into 1 country or 50, our operational framework is designed to scale without bottlenecks.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
+
+            <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 reveal">
+                <div class="lg:w-1/2 w-full px-4 sm:px-0">
+                    <div class="relative group">
+                        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Corporate Team Collaboration" class="rounded-3xl shadow-xl relative z-10 transition-transform duration-500 group-hover:scale-[1.02]">
+                        <div class="absolute -top-6 -left-6 w-full h-full border-4 border-secondary rounded-3xl z-0 hidden sm:block transition-transform duration-500 group-hover:-translate-x-2 group-hover:-translate-y-2"></div>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 w-full mt-10 lg:mt-0">
+                    <span class="text-primary font-extrabold uppercase tracking-widest mb-3 block text-sm">01 / Corporate Branding</span>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-secondary mb-6">Elevating Corporate Identity</h2>
+                    <p class="text-gray-600 text-lg mb-8 leading-relaxed font-medium">
+                        For established enterprises, brand perception is everything. We redefine and solidify your corporate identity across all digital touchpoints, ensuring consistency, authority, and trust among B2B partners and stakeholders.
+                    </p>
+                    <ul class="space-y-4">
+                        <li class="flex items-center gap-4 text-gray-700 font-bold">
+                            <i class="fas fa-check-circle text-primary text-xl"></i> Executive Brand Positioning
+                        </li>
+                        <li class="flex items-center gap-4 text-gray-700 font-bold">
+                            <i class="fas fa-check-circle text-primary text-xl"></i> Corporate PR & Authority Building
+                        </li>
+                        <li class="flex items-center gap-4 text-gray-700 font-bold">
+                            <i class="fas fa-check-circle text-primary text-xl"></i> Multi-channel Consistency Audits
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="flex flex-col lg:flex-row-reverse items-center gap-12 lg:gap-16 reveal">
+                <div class="lg:w-1/2 w-full px-4 sm:px-0">
+                    <div class="relative group">
+                        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Global Data" class="rounded-3xl shadow-xl relative z-10 transition-transform duration-500 group-hover:scale-[1.02]">
+                        <div class="absolute -top-6 -right-6 w-full h-full border-4 border-indigo-500 rounded-3xl z-0 hidden sm:block transition-transform duration-500 group-hover:translate-x-2 group-hover:-translate-y-2"></div>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 w-full mt-10 lg:mt-0">
+                    <span class="text-primary font-extrabold uppercase tracking-widest mb-3 block text-sm">02 / Enterprise Growth</span>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-secondary mb-6">Global App & Digital Scaling</h2>
+                    <p class="text-gray-600 text-lg mb-8 leading-relaxed font-medium">
+                        When deploying multi-million dollar budgets, efficiency is paramount. We build advanced, automated acquisition funnels that scale your app or digital service globally while aggressively lowering your CAC (Customer Acquisition Cost).
+                    </p>
+                    <ul class="space-y-4">
+                        <li class="flex items-center gap-4 text-gray-700 font-bold">
+                            <i class="fas fa-check-circle text-primary text-xl"></i> International Market Penetration
+                        </li>
+                        <li class="flex items-center gap-4 text-gray-700 font-bold">
+                            <i class="fas fa-check-circle text-primary text-xl"></i> High-Volume Media Buying
+                        </li>
+                        <li class="flex items-center gap-4 text-gray-700 font-bold">
+                            <i class="fas fa-check-circle text-primary text-xl"></i> Advanced Cohort Analysis
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="py-16 bg-white border-t border-gray-200 reveal">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-sm font-extrabold text-gray-400 uppercase tracking-widest mb-10">Trusted by Fast-Growing Enterprises Globally</p>
+            <div class="flex flex-wrap justify-center items-center gap-10 md:gap-20 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+                <div class="text-2xl font-black text-gray-800 tracking-tighter hover:text-indigo-600 transition-colors cursor-pointer">CORP<span class="text-gray-400">ONE</span></div>
+                <div class="text-2xl font-black text-gray-800 tracking-tighter hover:text-blue-600 transition-colors cursor-pointer"><i class="fas fa-globe"></i> GlobalTech</div>
+                <div class="text-2xl font-black text-gray-800 tracking-tighter hover:text-green-600 transition-colors cursor-pointer">Apex<span class="font-light">Financial</span></div>
+                <div class="text-2xl font-black text-gray-800 tracking-tighter hover:text-purple-600 transition-colors cursor-pointer">NEXUS<span class="text-gray-400">SYS</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-accent reveal">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-5xl font-extrabold text-secondary mb-6 tracking-tight">Transform Your Corporate Digital Ecosystem</h2>
+            <p class="text-lg md:text-xl text-gray-600 mb-10 font-medium max-w-3xl mx-auto">Bypass the red tape. Partner directly with Novaira Global's leadership team to architect a growth strategy that aligns with your boardroom objectives.</p>
+            <a href="/en/#contact" class="inline-flex items-center justify-center bg-primary hover:bg-indigo-700 text-white px-10 py-5 rounded-full font-extrabold text-lg shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-1 gap-3">
+                Request a Corporate Proposal <i class="fas fa-file-contract"></i>
+            </a>
+        </div>
+    </section>
+
+    <footer class="bg-white pt-16 pb-8 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12 text-center sm:text-left">
+                <div class="col-span-1 md:col-span-1 flex flex-col items-center sm:items-start">
+                    <div class="flex items-center gap-2 mb-4 cursor-pointer" onclick="window.location.href='/en/'">
+                        <div class="w-8 h-8 bg-primary text-white rounded-lg flex items-center justify-center font-bold text-sm shadow">N</div>
+                        <span class="font-extrabold text-xl text-secondary">Novaira Global</span>
+                    </div>
+                    <p class="text-gray-500 font-medium text-sm leading-relaxed mb-6">
+                        Global Digital Marketing Solutions.<br>
+                        Based in India • Operating Globally.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors" aria-label="LinkedIn"><i class="fab fa-linkedin text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors" aria-label="Twitter"><i class="fab fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors" aria-label="Instagram"><i class="fab fa-instagram text-xl"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-extrabold text-secondary mb-4 uppercase text-sm tracking-widest">Company</h4>
+                    <ul class="space-y-3">
+                        <li><a href="/about" class="text-gray-500 hover:text-primary text-sm font-semibold transition-colors">About Us</a></li>
+                        <li><a href="/services" class="text-gray-500 hover:text-primary text-sm font-semibold transition-colors">Our Services</a></li>
+                        <li><a href="/corporate" class="text-primary font-semibold text-sm transition-colors">Corporate</a></li>
+                        <li><a href="/#contact" class="text-gray-500 hover:text-primary text-sm font-semibold transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-extrabold text-secondary mb-4 uppercase text-sm tracking-widest">Services</h4>
+                    <ul class="space-y-3">
+                        <li><a href="/services" class="text-gray-500 hover:text-primary text-sm font-semibold transition-colors">App Growth</a></li>
+                        <li><a href="/services" class="text-gray-500 hover:text-primary text-sm font-semibold transition-colors">Performance Marketing</a></li>
+                        <li><a href="/services" class="text-gray-500 hover:text-primary text-sm font-semibold transition-colors">Brand Strategy</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-extrabold text-secondary mb-4 uppercase text-sm tracking-widest">Legal</h4>
+                    <ul class="space-y-3">
+                        <li><a href="/privacy-policy" class="text-gray-500 hover:text-primary text-sm font-semibold transition-colors">Privacy Policy</a></li>
+                        <li><a href="/terms" class="text-gray-500 hover:text-primary text-sm font-semibold transition-colors">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-400 font-semibold text-sm text-center md:text-left">
+                    &copy; 2026 Novaira Global. All rights reserved.
+                </p>
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_#22c55e]"></span>
+                    <span class="text-sm font-bold text-gray-500 uppercase tracking-widest">All systems operational</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Sidebar Logic
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileSidebar = document.getElementById('mobile-sidebar');
+        const sidebarContent = document.getElementById('sidebar-content');
+        const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+        function openSidebar() {
+            mobileSidebar.classList.remove('hidden');
+            setTimeout(() => {
+                sidebarOverlay.classList.remove('opacity-0');
+                sidebarContent.classList.remove('translate-x-full');
+            }, 10);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSidebar() {
+            sidebarOverlay.classList.add('opacity-0');
+            sidebarContent.classList.add('translate-x-full');
+            setTimeout(() => {
+                mobileSidebar.classList.add('hidden');
+            }, 300); 
+            document.body.style.overflow = '';
+        }
+
+        mobileMenuBtn.addEventListener('click', openSidebar);
+        
+        mobileSidebar.addEventListener('click', (e) => {
+            if (e.target === mobileSidebar || e.target === sidebarOverlay) {
+                closeSidebar();
+            }
+        });
+
+        // Scroll Animations
+        document.addEventListener("DOMContentLoaded", function() {
+            const reveals = document.querySelectorAll(".reveal");
+
+            const revealOnScroll = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("active");
+                        observer.unobserve(entry.target); 
+                    }
+                });
+            }, {
+                root: null,
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
+            });
+
+            reveals.forEach(reveal => {
+                revealOnScroll.observe(reveal);
+            });
+        });
+    </script>
+</body>
+</html>

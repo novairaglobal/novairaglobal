@@ -1,0 +1,13 @@
+Options -Indexes
+
+RewriteEngine On
+
+# Hide .php extension for API files
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php [L]
+
+# Protect db.php from direct access
+<Files "db.php">
+    Require all denied
+</Files>

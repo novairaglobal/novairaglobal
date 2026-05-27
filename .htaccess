@@ -1,0 +1,40 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # InfinityFree বা অন্যান্য হোস্টিংয়ে কনফ্লিক্ট এড়ানোর জন্য
+    Options -MultiViews
+
+    # ----------------------------------------------------------------------
+    # 1. External Redirect (URL থেকে .php ও .html রিমুভ করে ক্লিন URL এ নিয়ে যাবে)
+    # ----------------------------------------------------------------------
+    
+    # URL থেকে .php হাইড করা (যেমন: /auth.php থেকে /auth এ রিডাইরেক্ট করবে)
+    RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /([^\ ]+)\.php [NC]
+    RewriteRule ^/?(.*)\.php$ /$1 [L,R=301]
+    
+    # URL থেকে .html হাইড করা (যেমন: /about.html থেকে /about এ রিডাইরেক্ট করবে)
+    RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /([^\ ]+)\.html [NC]
+    RewriteRule ^/?(.*)\.html$ /$1 [L,R=301]
+    
+    # index.php বা index.html থাকলে সেটিকে মেইন রুটে (/) রিডাইরেক্ট করবে
+    RewriteRule ^index/?$ / [L,R=301]
+
+    # ----------------------------------------------------------------------
+    # 2. Internal Routing (ক্লিন URL দেখে সার্ভারের ভেতর থেকে আসল ফাইল লোড করবে)
+    # ----------------------------------------------------------------------
+    
+    # যদি কেউ /auth লিখে সার্চ করে, তবে সার্ভার চেক করবে auth.php আছে কি না, থাকলে লোড করবে
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME}\.php -f
+    RewriteRule ^(.*)$ $1.php [L]
+
+    # যদি কেউ /about লিখে সার্চ করে, তবে সার্ভার চেক করবে about.html আছে কি না, থাকলে লোড করবে
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME}\.html -f
+    RewriteRule ^(.*)$ $1.html [L]
+    
+    
+    # 404 page
+	ErrorDocument 404 /404.php
+
+</IfModule>
