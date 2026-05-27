@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "novaira-global",
+  "private_key_id": "15a1cbde964de64e89549934cc88bb245a4ce4eb",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC2OV73krW0GONa\n/DEhmbix2enjemDVXzVaJqevZ+u9JOj7cxBWcGKXAZhzwVv8x08KsEgbGxAX6WFf\nElRNu28d6U7VXZl8CO/hUmKg7VOtJD0YqFlav88ZIOFBJQnZu+NrivVePDyVIwoy\nxKGG2IS6axTGQNFrCZAl+33gDkL6mD6vx3o8QhY0L6kmyULh9X3WvALOsLKVZme3\n4waP77cbbwmnCmYu8Te8uKnW3J2kPT72/JQ8m3/A/X/25YbdZJ1koA/1RmPfO4cw\n2GOuJ8SS8ryV4hDm0SQ45doCELD5daI8Fi9XCd711Grikr3NDQUDBsepWL4mt6ZL\n4+ciOKgVAgMBAAECggEAAiX8V/rjfYjAQCBdC+0ItRVr9oHzhlB7C+G3dGVLQuLz\n2ZMVDDqC+bjLwqxIQ1tY3o1kLD2jcO9lddN81EseF5eFQGq8FoRHH7xIQWbK58MC\nSA95Y40uCePOBBCbDyAcoaCfx/P52uBGNyxY+IKw/empSF/B7aXNN0VsdH8hNwce\nDkJMGtr/0v1RF5HZPyPJ2hmidYIb9aoDdlFPA+4mIcLrVQTTOKtD1bwMzO36lKcs\nuYEqFJrGdbEKwt7DczEiW1AfKFllm/6ZvaA5IVWgaD4wyjZTGY9tWGC0/oCBoKms\nRIlr/azItkauE+r1i0hwnF/95LWBaQYlKrMm1T7S+QKBgQDZw6JD9lAR4p+vADO+\nhCv99u4Bj0IAKPsx6CkGQezxuQgzyGRmiycODadPcGmoZduSs0j8cLHL+eoqf4/w\njX6/cKoSc/6IInXWnNNZw1AG/2uCGJB3GOJzy61LO9X623qlsR3NhDzfY4ovaC7B\nWwXaXy2j7oHc6DJymJx+lQ+K+wKBgQDWODtmfCMMRiPwlH3VUp77mp5UlSqfD6h2\na2mZ2QAZkcN2sN/KIjFeJJ02vBz6HVSgVTAV/t+hgsSM76aLSGpS3wonwgkkYz8K\nZsBQvtuUwbcJwzB50KEUxVWze0utHYyuD5nkOJcyPlYK6EQjBOsmZOsprqtTtJ4Z\nIrfFMIEsLwKBgEoAWGEeECGz0K4ItIzWn5iDVGhFRZmGU66nBWHx/1I5ndbzD2Nl\ngFUfQK8XNWCblJ1qva/DoDf/6pqclM6bVuo5oCH7NxEOHNtcmdoULFrka6VfMaC3\nXSUanv5FDDdeZHRwFv+jI4iKbAgmMFVW2EtYMstVnt3yLkqRIAVIJGsHAoGAWvyv\nXixDxqbUBQ9NExpwpHVb4pko7T59Uy70P4BH5pRe7T7bDsPPLClpDSKBPErQ8vi7\n39vNqJAeY642ktpDLsfFTHXB5E6zK/vQm3s1UM2mrOLW6CaRBH18lSs9TV5LrnK5\n7pGKxrBrY16b8jPYnQooSCAEbR0+OXbhj0O22ckCgYBR6KzSuWQcPoNqdH1u5odN\nrlEswnmLJiSGVuTxN036FzvD0tHrf+cGOY/9a9BbqucqMR7Jt6OA+zktMNiH++Ro\n8bp1ZcBOOK22RcErQ+wGgwoVC4rPSUO7duiVqLqqc+2pS7gLcWX0sVBVLolbogIl\nEpwYciNn+o9FzJqF3pAJtA==\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-fbsvc@novaira-global.iam.gserviceaccount.com",
+  "client_id": "108685076359361417003",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40novaira-global.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
