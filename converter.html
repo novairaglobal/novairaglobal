@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise MySQL to PostgreSQL Converter</title>
+    <style>
+        :root {
+            --bg-main: #0f172a;
+            --bg-panel: #1e293b;
+            --bg-header: #0b1120;
+            --bg-settings: #172033;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --success: #10b981;
+            --danger: #ef4444;
+            --danger-hover: #dc2626;
+            --border: #334155;
+            --font-mono: 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', monospace;
+            --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Header & Toolbar */
+        header {
+            background-color: var(--bg-header);
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .badge {
+            font-size: 0.65rem;
+            background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .toolbar {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        /* Settings Bar */
+        .settings-bar {
+            background-color: var(--bg-settings);
+            padding: 0.75rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            flex-wrap: wrap;
+        }
+
+        .toggle-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            user-select: none;
+            background: rgba(255,255,255,0.05);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+        
+        .toggle-label:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .toggle-label input[type="checkbox"] {
+            accent-color: var(--accent);
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        /* Buttons */
+        button {
+            background-color: var(--bg-panel);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        button:hover {
+            background-color: #2c3e50;
+            border-color: #475569;
+        }
+
+        button.primary {
+            background-color: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+
+        button.primary:hover {
+            background-color: var(--accent-hover);
+            border-color: var(--accent-hover);
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+        }
+
+        button.danger {
+            color: #fca5a5;
+        }
+
+        button.danger:hover {
+            background-color: var(--danger);
+            color: white;
+            border-color: var(--danger);
+        }
+
+        /* Main Workspace */
+        .workspace {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            flex-direction: row;
+        }
+
+        .panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            border-right: 1px solid var(--border);
+        }
+
+        .panel:last-child {
+            border-right: none;
+        }
+
+        .panel-header {
+            background-color: var(--bg-panel);
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Editors */
+        textarea {
+            flex: 1;
+            background-color: var(--bg-main);
+            color: #cbd5e1;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            padding: 1rem;
+            border: none;
+            resize: none;
+            outline: none;
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        textarea::placeholder {
+            color: #475569;
+        }
+
+        textarea:focus {
+            box-shadow: inset 0 0 0 1px var(--border);
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 50;
+        }
+
+        .toast {
+            background-color: var(--bg-panel);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            font-size: 0.9rem;
+            transform: translateX(120%);
+            transition: transform 0.3s ease-out;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success { border-left: 4px solid var(--success); }
+        .toast.error { border-left: 4px solid var(--danger); }
+
+        /* Responsive Layout */
+        @media (max-width: 768px) {
+            .workspace {
+                flex-direction: column;
+            }
+            .panel {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+            .panel:last-child {
+                border-bottom: none;
+            }
+            .toolbar {
+                justify-content: flex-start;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="title">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+            MySQL → PostgreSQL <span class="badge">V8 PRO ENGINE</span>
+        </div>
+        <div class="toolbar">
+            <input type="file" id="fileInput" accept=".sql" style="display: none;">
+            <button onclick="document.getElementById('fileInput').click()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                Upload .sql
+            </button>
+            <button class="primary" onclick="processConversion()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Convert
+            </button>
+            <button onclick="copyOutput()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+            </button>
+            <button onclick="downloadSQL()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Download
+            </button>
+            <button class="danger" onclick="clearAll()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                Clear
+            </button>
+        </div>
+    </header>
+
+    <div class="settings-bar">
+        <span>⚙️ Engine Settings:</span>
+        <label class="toggle-label" title="Checking this maps tinyint(1) to BOOLEAN, but will crash if your INSERTs contain 0 or 1.">
+            <input type="checkbox" id="boolModeToggle" onchange="processConversion()">
+            Strict Boolean Mode
+        </label>
+        
+        <label class="toggle-label" title="Adds DROP TABLE IF EXISTS before CREATE TABLE. Crucial for re-running failed scripts without Primary Key errors.">
+            <input type="checkbox" id="dropTableToggle" checked onchange="processConversion()">
+            Add DROP TABLE IF EXISTS (Safe Re-runs)
+        </label>
+        
+        <span style="flex:1;"></span>
+        <span style="color:var(--success); font-weight:600;" id="modeIndicator">Safe Data Mode Active</span>
+    </div>
+
+    <div class="workspace">
+        <div class="panel">
+            <div class="panel-header">
+                <span>Input: MySQL</span>
+                <span id="inputStats" style="font-weight: 400; font-size: 0.75rem;">0 bytes</span>
+            </div>
+            <textarea id="inputSql" placeholder="Paste your MySQL dump here, or upload a .sql file..." spellcheck="false"></textarea>
+        </div>
+        
+        <div class="panel">
+            <div class="panel-header">
+                <span>Output: PostgreSQL (Supabase Ready)</span>
+            </div>
+            <textarea id="outputSql" readonly placeholder="PostgreSQL compatible output will appear here..." spellcheck="false"></textarea>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        // DOM Elements
+        const inputSql = document.getElementById('inputSql');
+        const outputSql = document.getElementById('outputSql');
+        const fileInput = document.getElementById('fileInput');
+        const inputStats = document.getElementById('inputStats');
+        const boolModeToggle = document.getElementById('boolModeToggle');
+        const dropTableToggle = document.getElementById('dropTableToggle');
+        const modeIndicator = document.getElementById('modeIndicator');
+
+        // Toggle UI updates
+        boolModeToggle.addEventListener('change', (e) => {
+            if (e.target.checked) {
+                modeIndicator.textContent = "Strict Boolean Mode Active (Schema Only)";
+                modeIndicator.style.color = "var(--danger)";
+            } else {
+                modeIndicator.textContent = "Safe Data Mode Active (Booleans mapped to SMALLINT)";
+                modeIndicator.style.color = "var(--success)";
+            }
+        });
+
+        // File Upload Handler
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                inputSql.value = e.target.result;
+                updateStats();
+                processConversion();
+                showToast(`Successfully loaded ${file.name}`, 'success');
+            };
+            reader.onerror = function() {
+                showToast('Error reading file', 'error');
+            };
+            reader.readAsText(file);
+            this.value = '';
+        });
+
+        inputSql.addEventListener('input', updateStats);
+
+        function updateStats() {
+            const bytes = new Blob([inputSql.value]).size;
+            if (bytes === 0) {
+                inputStats.textContent = '0 bytes';
+            } else if (bytes < 1024) {
+                inputStats.textContent = `${bytes} bytes`;
+            } else if (bytes < 1048576) {
+                inputStats.textContent = `${(bytes / 1024).toFixed(1)} KB`;
+            } else {
+                inputStats.textContent = `${(bytes / 1048576).toFixed(2)} MB`;
+            }
+        }
+
+        // V8 PRO ENGINE: Conversion Logic
+        function convertMySQLtoPostgreSQL(sql) {
+            if (!sql || sql.trim() === '') return '';
+
+            let pg = sql;
+            const strictBool = boolModeToggle.checked;
+            const addDropTables = dropTableToggle.checked;
+
+            try {
+                // 1. Comments & Environment Variables Clean-up
+                pg = pg.replace(/\/\*!.*?\*\//g, ''); 
+                pg = pg.replace(/(^|\n)\s*#/g, '$1--'); 
+                
+                pg = pg.replace(/\bCOMMENT\s+'[^']*'/gi, '');
+                pg = pg.replace(/\bCOMMENT\s*=\s*'[^']*'/gi, '');
+                
+                pg = pg.replace(/SET\s+FOREIGN_KEY_CHECKS\s*=\s*0\s*;/gi, "SET session_replication_role = 'replica';");
+                pg = pg.replace(/SET\s+FOREIGN_KEY_CHECKS\s*=\s*1\s*;/gi, "SET session_replication_role = 'origin';");
+                
+                pg = pg.replace(/SET\s+SQL_MODE\s*=\s*[^;]+;/gi, '');
+                pg = pg.replace(/SET\s+TIME_ZONE\s*=\s*[^;]+;/gi, '');
+                pg = pg.replace(/SET\s+NAMES\s+[^;]+;/gi, '');
+                pg = pg.replace(/SET\s+CHARACTER\s+SET\s+[^;]+;/gi, '');
+
+                // 2. Remove LOCK TABLES / UNLOCK TABLES
+                pg = pg.replace(/LOCK\s+TABLES[^;]+;/gi, '');
+                pg = pg.replace(/UNLOCK\s+TABLES[^;]*;/gi, '');
+
+                // 3. Convert MySQL Backticks to Double Quotes
+                pg = pg.replace(/`([^`]+)`/g, '"$1"');
+                
+                // [NEW] 3.5 Idempotent Mode: Add DROP TABLE IF EXISTS
+                if (addDropTables) {
+                    pg = pg.replace(/CREATE\s+TABLE\s+"([^"]+)"/gi, 'DROP TABLE IF EXISTS "$1" CASCADE;\nCREATE TABLE "$1"');
+                }
+
+                // 4. Handle Data Types & Size Limits
+                pg = pg.replace(/\bint\(\d+\)/gi, 'INTEGER');
+                pg = pg.replace(/\bbigint\(\d+\)/gi, 'BIGINT');
+                
+                if (strictBool) {
+                    pg = pg.replace(/\btinyint\(1\)/gi, 'BOOLEAN');
+                    pg = pg.replace(/\bBOOLEAN\s+DEFAULT\s+0\b/gi, 'BOOLEAN DEFAULT FALSE');
+                    pg = pg.replace(/\bBOOLEAN\s+DEFAULT\s+1\b/gi, 'BOOLEAN DEFAULT TRUE');
+                    pg = pg.replace(/\bBOOLEAN\s+DEFAULT\s+'0'\b/gi, 'BOOLEAN DEFAULT FALSE');
+                    pg = pg.replace(/\bBOOLEAN\s+DEFAULT\s+'1'\b/gi, 'BOOLEAN DEFAULT TRUE');
+                } else {
+                    pg = pg.replace(/\btinyint\(1\)/gi, 'SMALLINT');
+                    pg = pg.replace(/\bBOOLEAN\s+DEFAULT\s+FALSE\b/gi, 'SMALLINT DEFAULT 0');
+                    pg = pg.replace(/\bBOOLEAN\s+DEFAULT\s+TRUE\b/gi, 'SMALLINT DEFAULT 1');
+                    pg = pg.replace(/\bBOOLEAN\b/gi, 'SMALLINT'); 
+                }
+                
+                pg = pg.replace(/\btinyint\(\d+\)/gi, 'SMALLINT');
+                pg = pg.replace(/\bdatetime/gi, 'TIMESTAMPTZ');
+                pg = pg.replace(/\btimestamp\(\d+\)/gi, 'TIMESTAMPTZ');
+                pg = pg.replace(/\benum\([^)]+\)/gi, 'TEXT');
+                
+                pg = pg.replace(/\blongtext\b/gi, 'TEXT');
+                pg = pg.replace(/\bmediumtext\b/gi, 'TEXT');
+                pg = pg.replace(/\btinytext\b/gi, 'TEXT');
+                pg = pg.replace(/\bblob\b/gi, 'BYTEA');
+                pg = pg.replace(/\blongblob\b/gi, 'BYTEA');
+                pg = pg.replace(/\bmediumblob\b/gi, 'BYTEA');
+
+                pg = pg.replace(/\bdouble\b/gi, 'DOUBLE PRECISION');
+                pg = pg.replace(/\bfloat\b/gi, 'REAL');
+
+                // 6. Handle AUTO_INCREMENT mapping
+                pg = pg.replace(/\bINTEGER\b([^,]+?)AUTO_INCREMENT/gi, 'SERIAL$1');
+                pg = pg.replace(/\bBIGINT\b([^,]+?)AUTO_INCREMENT/gi, 'BIGSERIAL$1');
+                pg = pg.replace(/\bAUTO_INCREMENT\b/gi, ''); 
+
+                // 7. Remove MySQL constraints & syntax that crash Postgres
+                pg = pg.replace(/\bunsigned\b/gi, '');
+                pg = pg.replace(/ENGINE\s*=\s*\w+/gi, '');
+                pg = pg.replace(/DEFAULT\s+CHARSET\s*=\s*\w+/gi, '');
+                pg = pg.replace(/CHARSET\s*=\s*\w+/gi, '');
+                pg = pg.replace(/COLLATE\s*=\s*\w+/gi, '');
+                pg = pg.replace(/COLLATE\s+\w+/gi, '');
+                pg = pg.replace(/CHARACTER\s+SET\s+\w+/gi, '');
+
+                pg = pg.replace(/,\s*FULLTEXT\s+KEY\s+"[^"]+"\s*\([^)]+\)/gi, '');
+                pg = pg.replace(/,\s*(UNIQUE\s+)?KEY\s+"[^"]+"\s*\([^)]+\)/gi, '');
+
+                // 8. Timestamps and Default Functions
+                pg = pg.replace(/\bcurrent_timestamp\(\)/gi, 'NOW()');
+                pg = pg.replace(/\bON\s+UPDATE\s+CURRENT_TIMESTAMP\b(\(\))?/gi, '');
+                pg = pg.replace(/\bON\s+UPDATE\s+NOW\(\)/gi, ''); 
+                pg = pg.replace(/DEFAULT\s+'0000-00-00\s+00:00:00'/gi, "DEFAULT NULL");
+
+                // 9. Fix Escaped Quotes
+                pg = pg.replace(/\\'/g, "''");
+                pg = pg.replace(/\\"/g, '"');
+
+                // 10. Syntax Cleanup
+                pg = pg.replace(/,\s*\)/g, '\n)'); 
+                pg = pg.replace(/\)\s*;/g, ');');
+                
+                // 11. Handle ALTER TABLE Constraints & Indexes
+                pg = pg.replace(/ADD\s+UNIQUE\s+KEY\s+"([^"]+)"\s*\(([^)]+)\)/gi, 'ADD CONSTRAINT "$1" UNIQUE ($2)');
+                pg = pg.replace(/,\s*ADD\s+KEY\s+"[^"]+"\s*\([^)]+\)/gi, '');
+                pg = pg.replace(/ADD\s+KEY\s+"[^"]+"\s*\([^)]+\)\s*,/gi, '');
+                pg = pg.replace(/ADD\s+KEY\s+"[^"]+"\s*\([^)]+\)/gi, '');
+
+                // 12. Strip out AUTO_INCREMENT resets 
+                pg = pg.replace(/ALTER\s+TABLE\s+"[^"]+"\s+MODIFY\s+"[^"]+"[^;]+;/gi, '');
+
+                // Final cleanup for empty lines
+                pg = pg.replace(/\n\s*\n\s*\n/g, '\n\n'); 
+
+                return pg.trim();
+            } catch (err) {
+                console.error("Conversion Error:", err);
+                throw new Error("Failed to parse and convert SQL.");
+            }
+        }
+
+        function processConversion() {
+            const rawSql = inputSql.value;
+            if (!rawSql.trim()) {
+                if(event && event.type === 'click') showToast('Please paste or upload SQL first', 'error');
+                return;
+            }
+
+            try {
+                const converted = convertMySQLtoPostgreSQL(rawSql);
+                outputSql.value = converted;
+                if(event && event.type === 'click') showToast('V8 Pro Conversion successful!', 'success');
+            } catch (error) {
+                showToast('An error occurred during conversion.', 'error');
+            }
+        }
+
+        // Action Buttons
+        async function copyOutput() {
+            if (!outputSql.value) {
+                showToast('Nothing to copy', 'error');
+                return;
+            }
+            try {
+                await navigator.clipboard.writeText(outputSql.value);
+                showToast('Copied to clipboard!', 'success');
+            } catch (err) {
+                outputSql.select();
+                document.execCommand('copy');
+                showToast('Copied to clipboard!', 'success');
+            }
+        }
+
+        function downloadSQL() {
+            if (!outputSql.value) {
+                showToast('Nothing to download', 'error');
+                return;
+            }
+            
+            const blob = new Blob([outputSql.value], { type: 'text/sql' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'supabase_ready.sql';
+            document.body.appendChild(a);
+            a.click();
+            
+            setTimeout(() => {
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, 0);
+            
+            showToast('Download started', 'success');
+        }
+
+        function clearAll() {
+            inputSql.value = '';
+            outputSql.value = '';
+            updateStats();
+            showToast('Workspace cleared', 'success');
+        }
+
+        // Toast Notification System
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            const icon = type === 'success' 
+                ? `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>`
+                : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`;
+                
+            toast.innerHTML = `${icon} <span>${message}</span>`;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => toast.classList.add('show'), 10);
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => container.removeChild(toast), 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
