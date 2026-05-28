@@ -2,10 +2,10 @@
 // api/db.php
 
 // ==========================================
-// DEBUG MODE
+// ERROR REPORTING
 // ==========================================
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
+ini_set('display_errors', 0);
+ini_set('display_startup_errors', 0);
 error_reporting(E_ALL);
 
 // ==========================================
@@ -56,31 +56,6 @@ try {
     }
 
     // ==========================================
-    // DATABASE TEST
-    // ==========================================
-    $testQuery = $pdo->query("SELECT NOW()");
-    $serverTime = $testQuery->fetchColumn();
-
-    echo "
-    <div style='
-        background:#111;
-        color:#00ff88;
-        padding:20px;
-        margin:20px;
-        border-radius:10px;
-        font-family:Arial;
-    '>
-        <h2>✅ SUPABASE DATABASE CONNECTED</h2>
-
-        <p><b>Host:</b> $host</p>
-
-        <p><b>Database:</b> $dbname</p>
-
-        <p><b>PostgreSQL Time:</b> $serverTime</p>
-    </div>
-    ";
-
-    // ==========================================
     // LAST ACTIVE TRACKING
     // ==========================================
     if (
@@ -125,6 +100,59 @@ try {
     }
 
     // ==========================================
+    // MAINTENANCE MODE CHECK
+    // ==========================================
+    try {
+
+        $stmt = $pdo->prepare("
+            SELECT setting_value
+            FROM system_settings
+            WHERE setting_name = 'maintenance_mode'
+            LIMIT 1
+        ");
+
+        $stmt->execute();
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (
+            $result &&
+            $result['setting_value'] == '1'
+        ) {
+
+            $is_admin =
+                isset($_SESSION['user_type']) &&
+                $_SESSION['user_type'] === 'admin';
+
+            $is_user_65 =
+                isset($_SESSION['user_id']) &&
+                $_SESSION['user_id'] == 65;
+
+            if (!$is_admin && !$is_user_65) {
+
+                $currentPage =
+                    basename($_SERVER['PHP_SELF']);
+
+                if (
+                    $currentPage !== 'maintenance.php' &&
+                    $currentPage !== 'maintenance.html'
+                ) {
+
+                    header("Location: /maintenance.php");
+                    exit();
+                }
+            }
+        }
+
+    } catch (PDOException $e) {
+
+        error_log(
+            'Maintenance Check Failed: ' .
+            $e->getMessage()
+        );
+    }
+
+    // ==========================================
     // FCM TOKEN SAVE
     // ==========================================
     if (
@@ -159,7 +187,8 @@ try {
                     ':id'    => $userId
                 ]);
 
-                $_SESSION['saved_fcm_token'] = $fcm_token;
+                $_SESSION['saved_fcm_token'] =
+                    $fcm_token;
 
             } catch (PDOException $e) {
 
@@ -183,7 +212,8 @@ try {
 
         try {
 
-            $current_time = date('Y-m-d H:i:s');
+            $current_time =
+                date('Y-m-d H:i:s');
 
             $page_url =
                 "https://" .
@@ -235,29 +265,21 @@ try {
 
 } catch (PDOException $e) {
 
-    // ==========================================
-    // CONNECTION FAILED
-    // ==========================================
+    error_log(
+        'Database Connection Failed: ' .
+        $e->getMessage()
+    );
 
-    echo "
-    <div style='
-        background:#111;
-        color:red;
-        padding:20px;
-        margin:20px;
-        border-radius:10px;
-        font-family:Arial;
-    '>
-        <h2>❌ DATABASE CONNECTION FAILED</h2>
+    $currentPage =
+        basename($_SERVER['PHP_SELF']);
 
-        <p><b>Error:</b></p>
+    if (
+        $currentPage !== 'maintenance.php' &&
+        $currentPage !== 'maintenance.html'
+    ) {
 
-        <pre style='white-space:pre-wrap;color:#ff5555;'>
-" . $e->getMessage() . "
-        </pre>
-    </div>
-    ";
-
-    exit();
+        header("Location: /maintenance.php");
+        exit();
+    }
 }
 ?>
